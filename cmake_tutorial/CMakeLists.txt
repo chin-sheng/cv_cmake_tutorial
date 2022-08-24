@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD 11)
 # 設定尋找 header file 的路徑
 include_directories(include/)
 # 生成執行檔
+add_executable(main_unique_ptr ${PROJECT_SOURCE_DIR}/main_unique_ptr.cpp src/calculator.cpp)
+# 生成執行檔
 add_executable(main ${PROJECT_SOURCE_DIR}/main.cpp src/calculator.cpp)
 
 ## Cmake build 使用額外套件的執行檔
