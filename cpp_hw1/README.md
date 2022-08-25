@@ -9,10 +9,11 @@
   - 正確預測 data/test_data/3.png, data/test_data/8.png
 
 ## 作業完成條件
-- 修改以下四個檔案
+- 僅能修改以下四個檔案
   - src/knn_test.cpp
   - src/knn_train.cpp
   - Dockerfile
   - CMakeLists.txt
-- 使得啟動 container 時, 可以執行執行結果 
-  
+- 啟動 container 時, 可以直接執行結果 
+  - example
+  ![](https://i.imgur.com/YxeuMxe.png)
