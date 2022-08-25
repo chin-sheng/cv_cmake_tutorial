@@ -8,10 +8,10 @@
 class TrainDigit
 {
   public:
-    void train_val_split(cv::Mat& img);
-    void train();
-    void validation();
-    void save_model(std::string out_model_path);
+    void train_val_split(cv::Mat& img); // 將 TrainLabel, ValLabel, TrainData, ValData 賦值
+    void train(); // 利用 TrainLabel, TrainData 訓練 knn
+    void validation(); // 利用 ValLabel, ValData 驗證 knn
+    void save_model(std::string out_model_path); // 儲存 model
 
   private:
     cv::Mat TrainLabel;

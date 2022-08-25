@@ -13,7 +13,7 @@ class TestDigit
 {
   public:
     void load_model(std::string model_path);
-    float inference(cv::Mat& img);
+    float inference(cv::Mat& img); //預測結果
 
   private:
     int image_size = 20;
