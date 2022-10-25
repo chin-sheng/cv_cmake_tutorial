@@ -75,12 +75,16 @@ int Deck::cal_max_score(){
     }else if(check_d()){
         score = 5; // 5 張牌
     }else if(check_b() == 2){
-        score = 4 + check_a();
+        score = 4;
+        if((check_a() == 1)||(check_a() == 3)){
+            score++;
+        }
     }else if(check_c()){
         score = 3;
     }else{
-        score = num_without_color_list[0];
-        if(score!=3){score += check_b()*2;}
+        // 至多一組對子
+        score = check_a();
+        if(score<2){score += check_b()*2;} // 對子是否為 A，不是則加上
     }
     return score;
 }
@@ -108,7 +112,6 @@ int Deck::check_a()
 {
     /*
      回傳 A 的數量（不考慮花色）
-     如果超過 3 張以上A，回傳 0
     */
 }
 int Deck::check_b()
