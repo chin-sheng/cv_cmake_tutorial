@@ -45,6 +45,23 @@ void Deck::add_card(Card* card)
     /*
     建議：is_same_color、diff_one_index
     */
+    cout << "start add cards" << endl;
+    
+    if (cards.empty()){
+        cards.push_back(card);
+    }
+    else{
+        cout << cards.back() << endl;
+        cout << cards.back()->is_same_color(card) << endl;
+        cout << cards.back()->diff_one_index(card) << endl;
+        if((cards.back()->is_same_color(card))&&(cards.back()->diff_one_index(card))){
+            cards.erase(cards.end() - 1);
+        }
+        else{
+            cards.push_back(card);
+        }
+    }
+    cout << "end add cards" << endl;
 }
 
 int Deck::count_num_without_color(int x)
@@ -93,7 +110,14 @@ int Deck::cal_max_score(){
 // private
 void Deck::build_cards()
 {
-
+    iter iter = cards.begin();    
+    for(iter; iter < cards.end(); iter++)
+    {
+        int suit_tmp = get<0>((*iter)->get_coordinate());
+        int rank_tmp = get<1>((*iter)->get_coordinate());
+        //cout << get<0>((*iter)->get_coordinate()) << endl;
+        matrix[suit_tmp][rank_tmp] = true;
+    }
 }
 
 void Deck::get_num_without_color()
@@ -110,9 +134,8 @@ void Deck::get_num_without_color()
 
 int Deck::check_a()
 {
-    /*
-     回傳 A 的數量（不考慮花色）
-    */
+    int num_a = 0;
+    return num_a;
 }
 int Deck::check_b()
 {
