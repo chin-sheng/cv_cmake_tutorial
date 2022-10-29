@@ -51,9 +51,6 @@ void Deck::add_card(Card* card)
         cards.push_back(card);
     }
     else{
-        cout << cards.back() << endl;
-        cout << cards.back()->is_same_color(card) << endl;
-        cout << cards.back()->diff_one_index(card) << endl;
         if((cards.back()->is_same_color(card))&&(cards.back()->diff_one_index(card))){
             cards.erase(cards.end() - 1);
         }
@@ -62,11 +59,14 @@ void Deck::add_card(Card* card)
         }
     }
     cout << "end add cards" << endl;
+    cout << cards.size() << endl;
 }
 
 int Deck::count_num_without_color(int x)
 {
-
+    //auto count_num = count(num_without_color_list.begin(), num_without_color_list.end(), x);
+    cout << "Count = " << num_without_color_list.at(x) << endl;
+    return num_without_color_list.at(x);
 }
 
 ostream& operator<<(ostream& os, const Deck& deck)
@@ -115,8 +115,12 @@ void Deck::build_cards()
     {
         int suit_tmp = get<0>((*iter)->get_coordinate());
         int rank_tmp = get<1>((*iter)->get_coordinate());
-        //cout << get<0>((*iter)->get_coordinate()) << endl;
+        cout << get<0>((*iter)->get_coordinate()) <<"," << get<1>((*iter)->get_coordinate()) << endl;
         matrix[suit_tmp][rank_tmp] = true;
+    }
+    get_num_without_color();
+    for (int j = 0; j != num_without_color_list.size(); ++j) {
+        cout << "num_without_color_list" << num_without_color_list[j] << endl;
     }
 }
 
@@ -134,8 +138,7 @@ void Deck::get_num_without_color()
 
 int Deck::check_a()
 {
-    int num_a = 0;
-    return num_a;
+    return count_num_without_color(0);
 }
 int Deck::check_b()
 {
@@ -148,12 +151,31 @@ int Deck::check_b()
      如果數字分別為 33322，則回傳 2
      建議：可以使用 count_num_without_color
     */
+    int pair_count = 0;
+    for (int i = 0; i < 13; i = i + 1) {
+        int num_count = count_num_without_color(i);
+        if (3> num_count > 1) {
+            pair_count = pair_count + 1;
+        }
+        if(num_count > 3) {
+            pair_count = pair_count + 2;
+        }
+    }
+    return pair_count;
 }
 bool Deck::check_c()
 {
     /*
     回傳牌組是否有同花，也就是五張同一花色的牌
     */
+    for (int i = 0; i < 4; i = i + 1)
+    {
+        auto count_num = count(matrix[i].begin(), matrix[i].end(), true);
+        if (count_num >= 5) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Deck::check_d()
@@ -162,6 +184,16 @@ bool Deck::check_d()
     回傳牌組是否有順子，也就是五張順連的牌。順連與否不考慮花色，也不因點數而中斷，比如說黑桃Q、梅花K、方塊A、梅花2、黑桃3 這種組合也算順連。換言之，不考慮花色的話，共有 13 種順連的方式。
     建議：可以使用 check_continous
     */
+    vector<int> num_without_color;
+    for (int j = 0; j != num_without_color_list.size(); ++j) {
+        if (num_without_color_list[j]>0) num_without_color.push_back(j);
+    }
+    for (int j = 0; j != num_without_color.size(); ++j) {
+        cout << "num_no" << num_without_color[j] << endl;
+    }
+
+    return check_continous(num_without_color);
+
 }
 bool Deck::check_e()
 {
@@ -169,6 +201,14 @@ bool Deck::check_e()
     回傳牌組是否有葫蘆，也就是三張同一點數的牌，加一對其他點數的牌。
     建議：可以使用 count_num_without_color
     */
+    for (int i = 0; i < 13; i = i + 1) {
+        int num_count=count_num_without_color(i);
+        if (num_count > 2) {
+            return true;
+        }
+    }
+    return false;
+
 }
 bool Deck::check_f()
 {
@@ -176,6 +216,14 @@ bool Deck::check_f()
     回傳牌組是否有四條，也就是四張同一點數的牌，加一張其他點數的牌。
     建議：可以使用 count_num_without_color
     */
+    for (int i = 0; i < 13; i = i + 1) {
+        int num_count = count_num_without_color(i);
+        if (num_count > 3) {
+            return true;
+        }
+    }
+    return false;
+
 }
 bool Deck::check_g()
 {
@@ -183,4 +231,21 @@ bool Deck::check_g()
     回傳牌組是否有同花順，也就是五張同一花色且順連的牌。
     建議：可以使用 check_continous
     */
+    for (int i = 0; i < 4; i = i + 1) {
+        vector<int> num_same_color;
+        for (int j = 0; j != matrix[i].size(); ++j) {
+            if (matrix[i][j]) num_same_color.push_back(j);
+        }
+        for (int j = 0; j != num_same_color.size(); ++j) {
+            cout << "num_same" << num_same_color[j] << endl;
+        }
+        if (num_same_color.size() == 0) {
+            continue;
+        }
+
+        //if (check_continous(num_same_color)) {
+        //    return true;
+        //}
+    }
+    return false;
 }
